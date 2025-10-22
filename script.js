@@ -1,5 +1,25 @@
 // --- Global Mock Data & State Management ---
 let mockJobs = JSON.parse(localStorage.getItem('mockJobs')) || [
+    // THIS IS THE NEW FNB JOB
+    { 
+        id: 'jhsa004', 
+        title: 'Software Developer', 
+        company: 'FNB', 
+        location: 'Durban South Africa', 
+        category: 'IT', 
+        logo: 'assets/img/fnb-logo.png', // Using the real logo
+        employerId: 'fnb_recruiter' 
+    },
+    // THIS IS THE NEW NMU JOB
+    { 
+        id: 'jhsa005', 
+        title: 'Senior Lecture', 
+        company: 'Nelson Mandela University', 
+        location: 'Port Elizabeth South Africa', 
+        category: 'Engineering', 
+        logo: 'assets/img/nmu-logo.png', // Using the real logo
+        employerId: 'nmu_hr' 
+    },
     { id: 'jhsa001', title: 'Senior Software Engineer', company: 'Tech Solutions Ltd.', location: 'Cape Town, South Africa', category: 'IT', logo: 'assets/img/default-logo.png', employerId: 'techguru' },
     { id: 'jhsa002', title: 'Marketing Specialist', company: 'Global Brands Inc.', location: 'Johannesburg, South Africa', category: 'Marketing', logo: 'assets/img/default-logo.png', employerId: 'techguru' },
     { id: 'jhsa003', title: 'Financial Analyst', company: 'SA Finance Group', location: 'Durban, South Africa', category: 'Finance', logo: 'assets/img/default-logo.png', employerId: 'financepro' }
@@ -290,9 +310,8 @@ function initPostJobPage() {
         e.preventDefault();
         const currentUser = getCurrentUser();
         
-        // ** THIS IS THE NEW LOGIC FOR THE LOGO **
         const providedLogoUrl = document.getElementById('company-logo').value.trim();
-        const finalLogoUrl = providedLogoUrl ? providedLogoUrl : 'assets/img/default-logo.png'; // Use default if empty
+        const finalLogoUrl = providedLogoUrl ? providedLogoUrl : 'assets/img/default-logo.png';
 
         const newJob = {
             id: 'jhsa' + Date.now(),
@@ -300,7 +319,7 @@ function initPostJobPage() {
             company: document.getElementById('company-name').value,
             location: document.getElementById('location').value,
             category: document.getElementById('category').value,
-            logo: finalLogoUrl, // Use the final logo URL
+            logo: finalLogoUrl,
             postedDate: new Date().toISOString().split('T')[0],
             employerId: currentUser.username
         };
