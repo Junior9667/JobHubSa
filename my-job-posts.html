@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>JobHub SA - My Job Posts</title>
+    <title>My Job Posts - JobHub SA</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link rel="stylesheet" href="style.css">
@@ -11,43 +11,48 @@
 <body>
 
     <header class="header">
-        <!-- Content is injected by script.js -->
+        <!-- Header is injected by script.js -->
     </header>
 
-    <main class="my-job-posts-page section-padding">
-        <div class="container">
-            <h2 class="text-center">My Job Posts</h2>
-            <p class="text-center subtext">Manage your job listings and view applications</p>
-
-            <div class="top-actions">
-                <a href="post-job.html" class="btn btn-secondary"><i class="fas fa-plus"></i> Post New Job</a>
+    <main>
+        <section class="static-page-header">
+            <div class="container">
+                <h1>My Posted Jobs</h1>
             </div>
+        </section>
 
-            <div id="job-posts-list" class="job-post-list">
-                <!-- Job posts will be dynamically inserted here -->
-            </div>
+        <section class="section-padding">
+            <div class="container">
+                <div class="top-actions">
+                    <a href="post-job.html" class="btn btn-secondary">Post a New Job</a>
+                </div>
 
-            <div id="no-job-posts-state" class="empty-state text-center" style="display: none;">
-                <p>You haven't posted any jobs yet.</p>
-                <a href="post-job.html" class="btn btn-secondary"><i class="fas fa-plus"></i> Post a Job Now</a>
+                <div id="job-posts-list">
+                    <!-- Job posts will be dynamically inserted here -->
+                </div>
+
+                <div id="no-job-posts-state" class="empty-state" style="display: none;">
+                    <h3>You haven't posted any jobs yet.</h3>
+                    <p>Post a job to attract top talent in South Africa.</p>
+                </div>
             </div>
-        </div>
+        </section>
     </main>
 
-    <!-- Modal for Viewing List of Applicants -->
+    <!-- View Applicants Modal -->
     <div id="view-applicants-modal-overlay" class="modal-overlay">
         <div class="modal-content">
             <div class="modal-header">
-                <h3 id="applicants-modal-title">Applicants for Job</h3>
+                <h3 id="applicants-modal-title">Applicants</h3>
                 <button id="close-applicants-modal-btn" class="close-button">&times;</button>
             </div>
             <div id="applicants-list-container" class="modal-body">
-                <!-- Applicant list will be dynamically inserted here -->
+                <!-- Applicant list will be inserted here by script.js -->
             </div>
         </div>
     </div>
 
-    <!-- Modal for Viewing a Single Applicant's Details -->
+    <!-- Applicant Details Modal -->
     <div id="applicant-details-modal-overlay" class="modal-overlay">
         <div class="modal-content">
             <div class="modal-header">
@@ -56,17 +61,17 @@
             </div>
             <div class="modal-body">
                 <div id="applicant-details-content">
-                    <!-- Details will be dynamically inserted here -->
+                    <!-- Details inserted here by script.js -->
                 </div>
-                <div class="form-actions" style="justify-content: flex-end; margin-top: 20px;">
-                     <a href="#" id="download-cv-link" class="btn btn-secondary" download>Download CV (PDF)</a>
+                <div class="form-actions" style="margin-top: 20px;">
+                    <a href="#" id="download-cv-link" class="btn btn-secondary" target="_blank">Download CV</a>
                 </div>
             </div>
         </div>
     </div>
 
     <footer class="footer">
-        <!-- Content is injected by script.js -->
+        <!-- Footer is injected by script.js -->
     </footer>
 
     <script src="script.js"></script>

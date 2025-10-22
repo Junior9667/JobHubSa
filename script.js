@@ -1,25 +1,7 @@
 // --- Global Mock Data & State Management ---
 let mockJobs = JSON.parse(localStorage.getItem('mockJobs')) || [
-    // THIS IS THE NEW FNB JOB
-    { 
-        id: 'jhsa004', 
-        title: 'Software Developer', 
-        company: 'FNB', 
-        location: 'Durban South Africa', 
-        category: 'IT', 
-        logo: 'assets/img/fnb-logo.png', // Using the real logo
-        employerId: 'fnb_recruiter' 
-    },
-    // THIS IS THE NEW NMU JOB
-    { 
-        id: 'jhsa005', 
-        title: 'Senior Lecture', 
-        company: 'Nelson Mandela University', 
-        location: 'Port Elizabeth South Africa', 
-        category: 'Engineering', 
-        logo: 'assets/img/nmu-logo.png', // Using the real logo
-        employerId: 'nmu_hr' 
-    },
+    { id: 'jhsa004', title: 'Software Developer', company: 'FNB', location: 'Durban South Africa', category: 'IT', logo: 'assets/img/fnb-logo.png', employerId: 'fnb_recruiter' },
+    { id: 'jhsa005', title: 'Senior Lecture', company: 'Nelson Mandela University', location: 'Port Elizabeth South Africa', category: 'Engineering', logo: 'assets/img/nmu-logo.png', employerId: 'nmu_hr' },
     { id: 'jhsa001', title: 'Senior Software Engineer', company: 'Tech Solutions Ltd.', location: 'Cape Town, South Africa', category: 'IT', logo: 'assets/img/default-logo.png', employerId: 'techguru' },
     { id: 'jhsa002', title: 'Marketing Specialist', company: 'Global Brands Inc.', location: 'Johannesburg, South Africa', category: 'Marketing', logo: 'assets/img/default-logo.png', employerId: 'techguru' },
     { id: 'jhsa003', title: 'Financial Analyst', company: 'SA Finance Group', location: 'Durban, South Africa', category: 'Finance', logo: 'assets/img/default-logo.png', employerId: 'financepro' }
@@ -89,11 +71,12 @@ const footerHTML = `
     </div>
 `;
 
-
 // --- Main Entry Point ---
 document.addEventListener('DOMContentLoaded', () => {
-    document.querySelector('.header').innerHTML = headerHTML(getCurrentUser());
-    document.querySelector('.footer').innerHTML = footerHTML;
+    const header = document.querySelector('.header');
+    const footer = document.querySelector('.footer');
+    if (header) header.innerHTML = headerHTML(getCurrentUser());
+    if (footer) footer.innerHTML = footerHTML;
 
     const mobileMenuIcon = document.querySelector('.mobile-menu-icon');
     const mainNav = document.querySelector('.main-nav');
@@ -126,91 +109,105 @@ function getCurrentUser() { return JSON.parse(localStorage.getItem('currentUser'
 function logout() { localStorage.removeItem('currentUser'); window.location.href = 'index.html'; }
 
 function initLoginPage() {
-    document.getElementById('login-form').addEventListener('submit', e => {
-        e.preventDefault();
-        const username = document.getElementById('username').value;
-        const password = document.getElementById('password').value;
-        const user = mockUsers.find(u => u.username === username && u.password === password);
-        if (user) { localStorage.setItem('currentUser', JSON.stringify(user)); window.location.href = 'index.html'; } 
-        else { alert('Invalid username or password.'); }
-    });
+    const loginForm = document.getElementById('login-form');
+    if (loginForm) {
+        loginForm.addEventListener('submit', e => {
+            e.preventDefault();
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+            const user = mockUsers.find(u => u.username === username && u.password === password);
+            if (user) { localStorage.setItem('currentUser', JSON.stringify(user)); window.location.href = 'index.html'; } 
+            else { alert('Invalid username or password.'); }
+        });
+    }
 }
 
 function initRegisterPage() {
-    document.getElementById('register-form').addEventListener('submit', e => {
-        e.preventDefault();
-        const newUser = {
-            name: document.getElementById('name').value,
-            surname: document.getElementById('surname').value,
-            username: document.getElementById('username').value,
-            password: document.getElementById('password').value,
-            role: document.querySelector('input[name="role"]:checked').value
-        };
-        if (mockUsers.some(u => u.username === newUser.username)) { alert('Username already exists.'); return; }
-        mockUsers.push(newUser);
-        saveState();
-        alert('Registration successful! Please login.');
-        window.location.href = 'login.html';
-    });
+    const registerForm = document.getElementById('register-form');
+    if (registerForm) {
+        registerForm.addEventListener('submit', e => {
+            e.preventDefault();
+            const newUser = {
+                id: 'user' + Date.now(),
+                name: document.getElementById('name').value,
+                surname: document.getElementById('surname').value,
+                username: document.getElementById('username').value,
+                password: document.getElementById('password').value,
+                role: document.querySelector('input[name="role"]:checked').value
+            };
+            if (mockUsers.some(u => u.username === newUser.username)) { alert('Username already exists.'); return; }
+            mockUsers.push(newUser);
+            saveState();
+            alert('Registration successful! Please login.');
+            window.location.href = 'login.html';
+        });
+    }
 }
 
 // --- Home Page (index.html) ---
 function initHomePage() {
+    renderJobs(mockJobs);
+    
     const searchButton = document.getElementById("search-jobs-btn");
+    if (searchButton) {
+        searchButton.addEventListener("click", () => {
+            const keyword = document.getElementById("keyword-search").value.toLowerCase();
+            const location = document.getElementById("location-search").value.toLowerCase();
+            const category = document.getElementById("category-search").value;
+            const filteredJobs = mockJobs.filter(job =>
+                (job.title.toLowerCase().includes(keyword) || job.company.toLowerCase().includes(keyword)) &&
+                job.location.toLowerCase().includes(location) &&
+                (category === "" || job.category === category)
+            );
+            renderJobs(filteredJobs, "Search Results");
+        });
+    }
+
     const modalOverlay = document.getElementById("apply-modal-overlay");
     const closeModalBtn = document.getElementById("close-modal-btn");
     const applicationForm = document.getElementById("application-form");
 
-    renderJobs(mockJobs);
-
-    searchButton.addEventListener("click", () => {
-        const keyword = document.getElementById("keyword-search").value.toLowerCase();
-        const location = document.getElementById("location-search").value.toLowerCase();
-        const category = document.getElementById("category-search").value;
-        const filteredJobs = mockJobs.filter(job =>
-            (job.title.toLowerCase().includes(keyword) || job.company.toLowerCase().includes(keyword)) &&
-            job.location.toLowerCase().includes(location) &&
-            (category === "" || job.category === category)
-        );
-        renderJobs(filteredJobs, "Search Results");
-    });
-
-    closeModalBtn.addEventListener("click", () => modalOverlay.style.display = "none");
+    if (closeModalBtn) closeModalBtn.addEventListener("click", () => modalOverlay.style.display = "none");
     window.addEventListener("click", e => { if (e.target == modalOverlay) modalOverlay.style.display = "none"; });
     
-    applicationForm.addEventListener("submit", e => {
-        e.preventDefault();
-        const jobId = document.getElementById("apply-job-id").value;
-        const cvFile = document.getElementById("cv-upload").files[0];
-        if (!cvFile || cvFile.type !== "application/pdf") { return alert("Please upload a valid PDF file for your CV."); }
-        const newApplication = {
-            id: "app" + Date.now(),
-            jobId: jobId,
-            userId: getCurrentUser().username,
-            applicantName: document.getElementById("full-name").value,
-            applicantEmail: document.getElementById("email").value,
-            applicantPhone: document.getElementById("phone").value,
-            applicantCV: cvFile.name,
-            appliedDate: (new Date).toISOString(),
-            status: "Pending"
-        };
-        mockApplications.push(newApplication);
-        saveState();
-        modalOverlay.style.display = "none";
-        applicationForm.reset();
-        alert("Application submitted successfully!");
-    });
+    if (applicationForm) {
+        applicationForm.addEventListener("submit", e => {
+            e.preventDefault();
+            const jobId = document.getElementById("apply-job-id").value;
+            const cvFile = document.getElementById("cv-upload").files[0];
+            if (!cvFile || cvFile.type !== "application/pdf") { return alert("Please upload a valid PDF file for your CV."); }
+            const newApplication = {
+                id: "app" + Date.now(),
+                jobId: jobId,
+                userId: getCurrentUser().username,
+                applicantName: document.getElementById("full-name").value,
+                applicantEmail: document.getElementById("email").value,
+                applicantPhone: document.getElementById("phone").value,
+                applicantCV: cvFile.name,
+                appliedDate: (new Date).toISOString(),
+                status: "Pending"
+            };
+            mockApplications.push(newApplication);
+            saveState();
+            modalOverlay.style.display = "none";
+            applicationForm.reset();
+            alert("Application submitted successfully!");
+        });
+    }
 }
 
 function renderJobs(jobs, title = "All Job Listings") {
     const grid = document.getElementById('job-listings-grid');
     const message = document.getElementById('no-jobs-message');
-    document.getElementById('job-listings-title').textContent = title;
-    grid.innerHTML = '';
+    const titleElement = document.getElementById('job-listings-title');
+
+    if(titleElement) titleElement.textContent = title;
+    if(grid) grid.innerHTML = '';
+
     if (jobs.length === 0) {
-        message.style.display = 'block';
+        if(message) message.style.display = 'block';
     } else {
-        message.style.display = 'none';
+        if(message) message.style.display = 'none';
         jobs.forEach(job => grid.innerHTML += createJobCardHTML(job));
         attachApplyListeners();
     }
@@ -247,9 +244,9 @@ function initMyApplicationsPage() {
     const userApplications = mockApplications.filter(app => app.userId === currentUser.username);
     list.innerHTML = '';
     if (userApplications.length === 0) {
-        message.style.display = 'block';
+        if(message) message.style.display = 'block';
     } else {
-        message.style.display = 'none';
+        if(message) message.style.display = 'none';
         userApplications.forEach(app => list.innerHTML += createApplicationItemHTML(app));
     }
 }
@@ -300,33 +297,102 @@ function createJobPostItemHTML(job) {
 }
 function attachDeleteListeners() { document.querySelectorAll('.btn-delete').forEach(button => { button.addEventListener('click', (e) => { const jobId = e.target.dataset.jobId; if (confirm('Are you sure you want to delete this job post?')) { mockJobs = mockJobs.filter(job => job.id !== jobId); mockApplications = mockApplications.filter(app => app.jobId !== jobId); saveState(); renderMyJobPosts(); } }); }); }
 function attachViewApplicantsListeners() { document.querySelectorAll('.btn-view-applicants').forEach(button => button.addEventListener('click', e => openApplicantsModal(e.target.dataset.jobId))); }
-function openApplicantsModal(jobId) { /* Modal logic would go here */ }
-function updateApplicationStatus(applicationId, newStatus, jobId) { /* Status update logic */ }
-function openApplicantDetailsModal(applicationId) { /* Details modal logic */ }
+
+function openApplicantsModal(jobId) {
+    const job = mockJobs.find(j => j.id === jobId);
+    const applicants = mockApplications.filter(app => app.jobId === jobId);
+    const modal = document.getElementById('view-applicants-modal-overlay');
+    const title = document.getElementById('applicants-modal-title');
+    const container = document.getElementById('applicants-list-container');
+    
+    title.textContent = `Applicants for ${job.title}`;
+    container.innerHTML = '';
+
+    if (applicants.length === 0) {
+        container.innerHTML = '<p>No applicants for this job yet.</p>';
+    } else {
+        applicants.forEach(app => {
+            container.innerHTML += `
+                <div class="applicant-list-item">
+                    <div class="applicant-info">
+                        <p class="applicant-name">${app.applicantName}</p>
+                        <p class="application-date">Applied: ${new Date(app.appliedDate).toLocaleDateString()} | Status: <strong>${app.status}</strong></p>
+                    </div>
+                    <div class="applicant-actions">
+                        <button class="btn btn-view-details" data-appid="${app.id}">View</button>
+                        <button class="btn btn-approve" data-appid="${app.id}">Approve</button>
+                        <button class="btn btn-decline" data-appid="${app.id}">Decline</button>
+                    </div>
+                </div>
+            `;
+        });
+    }
+    attachModalActionListeners(jobId);
+    modal.style.display = 'flex';
+}
+
+function attachModalActionListeners(jobId) {
+    document.querySelectorAll('.btn-view-details').forEach(b => b.onclick = e => openApplicantDetailsModal(e.target.dataset.appid));
+    document.querySelectorAll('.btn-approve').forEach(b => b.onclick = e => updateApplicationStatus(e.target.dataset.appid, 'Approved', jobId));
+    document.querySelectorAll('.btn-decline').forEach(b => b.onclick = e => updateApplicationStatus(e.target.dataset.appid, 'Declined', jobId));
+}
+
+function updateApplicationStatus(applicationId, newStatus, jobId) {
+    const application = mockApplications.find(app => app.id === applicationId);
+    if (application) {
+        application.status = newStatus;
+        saveState();
+        openApplicantsModal(jobId);
+    }
+}
+
+function openApplicantDetailsModal(applicationId) {
+    const application = mockApplications.find(app => app.id === applicationId);
+    const modal = document.getElementById('applicant-details-modal-overlay');
+    const content = document.getElementById('applicant-details-content');
+    const cvLink = document.getElementById('download-cv-link');
+    
+    content.innerHTML = `
+        <p><strong>Name:</strong> ${application.applicantName}</p>
+        <p><strong>Email:</strong> ${application.applicantEmail}</p>
+        <p><strong>Phone:</strong> ${application.applicantPhone}</p>
+        <p><strong>CV Filename:</strong> ${application.applicantCV}</p>
+    `;
+    
+    cvLink.onclick = (e) => {
+        e.preventDefault();
+        alert(`Simulating download for CV: ${application.applicantCV}\nIn a real application, this would trigger a file download.`);
+    };
+
+    modal.style.display = 'flex';
+}
 
 // --- Post Job Page (post-job.html) ---
 function initPostJobPage() {
-    document.getElementById('post-job-form').addEventListener('submit', (e) => {
-        e.preventDefault();
-        const currentUser = getCurrentUser();
-        
-        const providedLogoUrl = document.getElementById('company-logo').value.trim();
-        const finalLogoUrl = providedLogoUrl ? providedLogoUrl : 'assets/img/default-logo.png';
+    const postJobForm = document.getElementById('post-job-form');
+    if (postJobForm) {
+        postJobForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const currentUser = getCurrentUser();
+            
+            const providedLogoUrl = document.getElementById('company-logo').value.trim();
+            const finalLogoUrl = providedLogoUrl ? providedLogoUrl : 'assets/img/default-logo.png';
 
-        const newJob = {
-            id: 'jhsa' + Date.now(),
-            title: document.getElementById('job-title').value,
-            company: document.getElementById('company-name').value,
-            location: document.getElementById('location').value,
-            category: document.getElementById('category').value,
-            logo: finalLogoUrl,
-            postedDate: new Date().toISOString().split('T')[0],
-            employerId: currentUser.username
-        };
+            const newJob = {
+                id: 'jhsa' + Date.now(),
+                title: document.getElementById('job-title').value,
+                company: document.getElementById('company-name').value,
+                location: document.getElementById('location').value,
+                category: document.getElementById('category').value,
+                logo: finalLogoUrl,
+                postedDate: new Date().toISOString().split('T')[0],
+                employerId: currentUser.username
+            };
 
-        mockJobs.push(newJob);
-        saveState();
-        alert('Job posted successfully!');
-        window.location.href = 'my-job-posts.html';
-    });
+            mockJobs.push(newJob);
+            saveState();
+            alert('Job posted successfully!');
+            window.location.href = 'my-job-posts.html';
+        });
+    }
 }

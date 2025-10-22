@@ -49,7 +49,13 @@ a:hover { color: var(--sunset-orange); }
 .job-listings-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 30px; margin-top: 40px; }
 .job-card { background-color: var(--white); padding: 20px; border-radius: var(--border-radius); box-shadow: var(--shadow); display: flex; flex-direction: column; justify-content: space-between; }
 .job-card-header { display: flex; gap: 15px; align-items: center; margin-bottom: 20px; }
-.company-logo { width: 50px; height: 50px; border-radius: 50%; object-fit: cover; }
+.company-logo {
+    width: 50px;
+    height: 50px;
+    border-radius: 8px;
+    object-fit: contain;
+    border: 1px solid #eee;
+}
 .job-card h3 { margin: 0 0 5px 0; }
 .company-name, .job-location { color: var(--secondary-text); font-size: 0.9em; margin: 0; }
 .job-location i { margin-right: 5px; }
@@ -62,7 +68,7 @@ a:hover { color: var(--sunset-orange); }
 .job-form h3:first-of-type { margin-top: 0; }
 .form-group { margin-bottom: 20px; }
 .form-group label { display: block; margin-bottom: 8px; font-weight: 600; }
-.form-group input[type="text"], .form-group input[type="email"], .form-group input[type="tel"], .form-group input[type="file"], .form-group select, .form-group textarea { width: 100%; padding: 12px; border: 1px solid #ccc; border-radius: 5px; font-size: 1em; }
+.form-group input[type="text"], .form-group input[type="email"], .form-group input[type="tel"], .form-group input[type="file"], .form-group input[type="url"], .form-group select, .form-group textarea { width: 100%; padding: 12px; border: 1px solid #ccc; border-radius: 5px; font-size: 1em; }
 .file-note { font-size: 0.85em; color: var(--secondary-text); margin-top: 5px; }
 #requirements-container .requirement-input, #benefits-container .benefit-input { margin-bottom: 10px; }
 .btn-add-item { background-color: #e0e7ff; color: var(--royal-blue); padding: 8px 15px; border-radius: 5px; border: none; cursor: pointer; }
