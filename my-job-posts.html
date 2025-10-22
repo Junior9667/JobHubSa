@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JobHub SA - My Job Posts</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <header class="header">
+        <!-- Content is injected by script.js -->
+    </header>
+
+    <main class="my-job-posts-page section-padding">
+        <div class="container">
+            <h2 class="text-center">My Job Posts</h2>
+            <p class="text-center subtext">Manage your job listings and view applications</p>
+
+            <div class="top-actions">
+                <a href="post-job.html" class="btn btn-secondary"><i class="fas fa-plus"></i> Post New Job</a>
+            </div>
+
+            <div id="job-posts-list" class="job-post-list">
+                <!-- Job posts will be dynamically inserted here -->
+            </div>
+
+            <div id="no-job-posts-state" class="empty-state text-center" style="display: none;">
+                <p>You haven't posted any jobs yet.</p>
+                <a href="post-job.html" class="btn btn-secondary"><i class="fas fa-plus"></i> Post a Job Now</a>
+            </div>
+        </div>
+    </main>
+
+    <!-- Modal for Viewing List of Applicants -->
+    <div id="view-applicants-modal-overlay" class="modal-overlay">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="applicants-modal-title">Applicants for Job</h3>
+                <button id="close-applicants-modal-btn" class="close-button">&times;</button>
+            </div>
+            <div id="applicants-list-container" class="modal-body">
+                <!-- Applicant list will be dynamically inserted here -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal for Viewing a Single Applicant's Details -->
+    <div id="applicant-details-modal-overlay" class="modal-overlay">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Applicant Details</h3>
+                <button id="close-details-modal-btn" class="close-button">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div id="applicant-details-content">
+                    <!-- Details will be dynamically inserted here -->
+                </div>
+                <div class="form-actions" style="justify-content: flex-end; margin-top: 20px;">
+                     <a href="#" id="download-cv-link" class="btn btn-secondary" download>Download CV (PDF)</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <!-- Content is injected by script.js -->
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,138 @@
+/* --- Global Variables --- */
+:root {
+    --royal-blue: #004AAD;
+    --sunset-orange: #FF7F00;
+    --white: #FFFFFF;
+    --light-gray: #f8f9fa;
+    --text-color: #333;
+    --secondary-text: #6c757d;
+    --border-radius: 8px;
+    --shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+}
+
+/* --- Base & Typography --- */
+body { font-family: 'Inter', sans-serif; margin: 0; background-color: var(--light-gray); color: var(--text-color); line-height: 1.6; }
+.container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
+h1, h2, h3 { color: var(--royal-blue); font-weight: 700; }
+h1 { font-size: 2.8em; } h2 { font-size: 2em; } h3 { font-size: 1.4em; }
+a { color: var(--royal-blue); text-decoration: none; transition: color 0.3s ease; }
+a:hover { color: var(--sunset-orange); }
+.text-center { text-align: center; }
+.section-padding { padding: 60px 0; }
+.subtext { font-size: 1.1em; color: var(--secondary-text); margin-bottom: 30px; }
+
+/* --- Buttons --- */
+.btn { padding: 12px 25px; border: none; border-radius: var(--border-radius); font-weight: 600; cursor: pointer; transition: all 0.3s ease; display: inline-block; }
+.btn-primary-outline { background-color: transparent; border: 2px solid var(--sunset-orange); color: var(--sunset-orange); }
+.btn-primary-outline:hover { background-color: var(--sunset-orange); color: var(--white); }
+.btn-secondary { background-color: var(--royal-blue); color: var(--white); }
+.btn-secondary:hover { opacity: 0.9; transform: translateY(-2px); }
+
+/* --- Header & Navigation --- */
+.header { background-color: var(--white); padding: 15px 0; box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05); position: sticky; top: 0; z-index: 1000; }
+.header .container { display: flex; justify-content: space-between; align-items: center; }
+.logo { font-size: 1.5em; font-weight: 700; color: var(--royal-blue); }
+.logo i { margin-right: 8px; }
+.main-nav ul { margin: 0; padding: 0; list-style: none; display: flex; gap: 30px; }
+.main-nav a { font-weight: 500; }
+.mobile-menu-icon { display: none; font-size: 1.5em; cursor: pointer; }
+
+/* --- Hero Section & Search --- */
+.hero-section { background: linear-gradient(rgba(0, 74, 173, 0.8), rgba(0, 74, 173, 0.8)), url('assets/img/hero-background.jpg.webp') no-repeat center center/cover; color: var(--white); padding: 100px 0; text-align: center; }
+.hero-section h1 { color: var(--white); margin-bottom: 15px; }
+.search-form { display: flex; gap: 15px; background-color: var(--white); padding: 15px; border-radius: var(--border-radius); margin-top: 30px; box-shadow: var(--shadow); }
+.search-field { display: flex; align-items: center; flex: 1; background-color: var(--light-gray); padding: 0 15px; border-radius: var(--border-radius); }
+.search-field i { color: var(--secondary-text); margin-right: 10px; }
+.search-field input, .search-field select { width: 100%; border: none; background: none; padding: 15px 0; outline: none; font-size: 1em; }
+
+/* --- Job Listings Grid & Cards --- */
+.job-listings-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 30px; margin-top: 40px; }
+.job-card { background-color: var(--white); padding: 20px; border-radius: var(--border-radius); box-shadow: var(--shadow); display: flex; flex-direction: column; justify-content: space-between; }
+.job-card-header { display: flex; gap: 15px; align-items: center; margin-bottom: 20px; }
+.company-logo { width: 50px; height: 50px; border-radius: 50%; object-fit: cover; }
+.job-card h3 { margin: 0 0 5px 0; }
+.company-name, .job-location { color: var(--secondary-text); font-size: 0.9em; margin: 0; }
+.job-location i { margin-right: 5px; }
+.job-card-footer { border-top: 1px solid #eee; padding-top: 15px; margin-top: 15px; text-align: right; }
+.btn-apply { background-color: var(--sunset-orange); color: var(--white); padding: 8px 20px; border-radius: 5px; border: none; cursor: pointer; }
+
+/* --- General Form Styling --- */
+.job-form { background-color: var(--white); padding: 40px; border-radius: var(--border-radius); box-shadow: var(--shadow); max-width: 800px; margin: 30px auto; }
+.job-form h3 { margin-top: 30px; margin-bottom: 20px; border-bottom: 1px solid #eee; padding-bottom: 10px; }
+.job-form h3:first-of-type { margin-top: 0; }
+.form-group { margin-bottom: 20px; }
+.form-group label { display: block; margin-bottom: 8px; font-weight: 600; }
+.form-group input[type="text"], .form-group input[type="email"], .form-group input[type="tel"], .form-group input[type="file"], .form-group select, .form-group textarea { width: 100%; padding: 12px; border: 1px solid #ccc; border-radius: 5px; font-size: 1em; }
+.file-note { font-size: 0.85em; color: var(--secondary-text); margin-top: 5px; }
+#requirements-container .requirement-input, #benefits-container .benefit-input { margin-bottom: 10px; }
+.btn-add-item { background-color: #e0e7ff; color: var(--royal-blue); padding: 8px 15px; border-radius: 5px; border: none; cursor: pointer; }
+.form-actions { display: flex; justify-content: flex-end; gap: 15px; margin-top: 40px; }
+.btn-cancel { background-color: #e0e0e0; color: #555; }
+
+/* --- My Applications & My Job Posts --- */
+.empty-state { padding: 50px; background-color: var(--white); border-radius: var(--border-radius); text-align: center; margin-top: 40px; }
+.application-item, .job-post-item { background-color: var(--white); padding: 20px; border-radius: var(--border-radius); box-shadow: var(--shadow); margin-bottom: 20px; display: flex; justify-content: space-between; align-items: center; gap: 15px; }
+.application-details, .job-post-details { flex: 2; }
+.top-actions { text-align: right; margin-bottom: 30px; }
+.job-post-actions .btn-delete, .job-applicants .btn-view-applicants { padding: 8px 15px; font-size: 0.9em; }
+.job-post-actions .btn-delete { background-color: #dc3545; color: white; }
+.job-applicants .btn-view-applicants { background-color: var(--royal-blue); color: white; }
+
+/* --- Footer --- */
+.footer { background-color: #343a40; color: var(--white); padding: 40px 0; margin-top: 60px; }
+.footer-content { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 20px; }
+.footer-logo { font-size: 1.3em; }
+.footer-nav ul { display: flex; gap: 20px; list-style: none; padding: 0; }
+.footer-nav a { color: var(--white); }
+.social-icons a { color: var(--white); font-size: 1.2em; margin-left: 15px; }
+.footer-bottom { text-align: center; margin-top: 30px; padding-top: 20px; border-top: 1px solid #495057; font-size: 0.9em; }
+
+/* --- Static Content Pages --- */
+.static-page-header { background-color: var(--royal-blue); color: var(--white); padding: 40px 0; text-align: center; }
+.static-page-header h1 { color: var(--white); margin: 0; }
+.static-content { max-width: 800px; margin: 0 auto; background-color: var(--white); padding: 40px; border-radius: var(--border-radius); box-shadow: var(--shadow); }
+.static-content h2, .static-content h3 { margin-top: 30px; }
+.static-content h2:first-child, .static-content h3:first-child { margin-top: 0; }
+.static-content ul { padding-left: 20px; }
+
+/* --- Contact Page --- */
+.contact-grid { display: grid; grid-template-columns: 1fr 1.5fr; gap: 40px; align-items: flex-start; }
+.contact-info h3 { margin-top: 0; }
+.info-item { display: flex; align-items: center; gap: 15px; margin-bottom: 20px; color: var(--secondary-text); }
+.info-item i { font-size: 1.2em; color: var(--royal-blue); }
+.contact-form-container .job-form { margin-top: 0; padding: 0; box-shadow: none; }
+
+/* --- Back Button --- */
+.btn-back { background-color: transparent; color: var(--secondary-text); border: 1px solid #ccc; padding: 8px 15px; font-size: 0.9em; margin-bottom: 30px; display: inline-block; }
+.btn-back:hover { background-color: #f0f0f0; border-color: #aaa; }
+
+/* --- Modal Styling (for Application & Applicants) --- */
+.modal-overlay { display: none; position: fixed; z-index: 2000; left: 0; top: 0; width: 100%; height: 100%; overflow: auto; background-color: rgba(0,0,0,0.5); justify-content: center; align-items: center; }
+.modal-content { background-color: #fefefe; margin: auto; padding: 30px; border: 1px solid #888; width: 90%; max-width: 600px; border-radius: var(--border-radius); box-shadow: 0 5px 20px rgba(0,0,0,0.3); }
+.modal-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #eee; padding-bottom: 15px; margin-bottom: 20px; }
+.modal-header h3 { margin: 0; }
+.close-button { color: #aaa; font-size: 28px; font-weight: bold; background: none; border: none; cursor: pointer; }
+.close-button:hover, .close-button:focus { color: black; }
+.modal-content .job-form { padding: 0; box-shadow: none; margin: 0; }
+
+/* --- Applicant Modal & List Styling --- */
+.applicant-list-item { display: flex; justify-content: space-between; align-items: center; padding: 15px 10px; border-bottom: 1px solid #eee; }
+.applicant-list-item:last-child { border-bottom: none; }
+.applicant-info p { margin: 0; }
+.applicant-info .applicant-name { font-weight: 600; }
+.applicant-info .application-date { font-size: 0.9em; color: var(--secondary-text); }
+.applicant-actions .btn { padding: 6px 12px; font-size: 0.85em; margin-left: 8px; }
+.btn-approve { background-color: #28a745; color: white; }
+.btn-decline { background-color: #dc3545; color: white; }
+.btn-view-details { background-color: #007bff; color: white; }
+#applicant-details-content p { margin: 0 0 10px 0; line-height: 1.8; }
+
+/* --- Status Badge Color Coding --- */
+.status-badge { display: inline-block; padding: 5px 12px; border-radius: 20px; font-size: 0.85em; font-weight: 600; }
+.status-badge.status-pending { background-color: #fff3cd; color: #856404; }
+.status-badge.status-approved { background-color: #d4edda; color: #155724; }
+.status-badge.status-declined { background-color: #f8d7da; color: #721c24; }
+
+/* --- Responsive Design --- */
+@media (max-width: 992px) { .search-form { flex-direction: column; } .header .btn-primary-outline { display: none; } }
+@media (max-width: 768px) { h1 { font-size: 2.2em; } .main-nav { display: none; position: absolute; top: 70px; left: 0; width: 100%; background-color: var(--white); box-shadow: 0 5px 10px rgba(0,0,0,0.1); } .main-nav.active { display: block; } .main-nav ul { flex-direction: column; padding: 20px; } .mobile-menu-icon { display: block; } .application-item, .job-post-item { flex-direction: column; align-items: flex-start; } .contact-grid { grid-template-columns: 1fr; } }
